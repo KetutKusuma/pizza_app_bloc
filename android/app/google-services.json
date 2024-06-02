@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "268620085706",
+    "project_id": "ketut-pizza-app",
+    "storage_bucket": "ketut-pizza-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:268620085706:android:92fe8147ff0c03c40f3733",
+        "android_client_info": {
+          "package_name": "com.example.pizza_app_bloc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA96E5EmTpGV_o5OLvwT1_Ndjra0sQf84I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
