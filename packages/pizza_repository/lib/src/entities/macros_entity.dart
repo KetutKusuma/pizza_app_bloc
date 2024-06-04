@@ -19,12 +19,19 @@ class MacrosEntity {
     };
   }
 
-  MacrosEntity fromDocument(Map<String, dynamic> doc) {
+  static MacrosEntity fromDocument(Map<String, dynamic> doc) {
+    // print("ATAU DISINI : $doc");
     return MacrosEntity(
       calories: doc['calories'],
       proteins: doc['proteins'],
       fat: doc['fat'],
       carbs: doc['carbs'],
     );
+  }
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return "MACORS ENTITY : $calories, $proteins, $fat, $carbs";
   }
 }

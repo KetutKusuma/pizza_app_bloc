@@ -6,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pizza_app_bloc/blocs/authentication/authentication_bloc.dart';
 import 'package:pizza_app_bloc/screens/auth/bloc/sign_in/sign_in_bloc.dart';
 import 'package:pizza_app_bloc/screens/auth/view/sign_up_screen.dart';
+import 'package:pizza_app_bloc/screens/home/bloc/get_pizza/get_pizza_bloc.dart';
+import 'package:pizza_repository/pizza_repository.dart';
 import 'screens/auth/bloc/sign_up/sign_up_bloc.dart';
 import 'screens/auth/view/sign_in_screen.dart';
 import 'screens/home/view/home_screen.dart';
@@ -31,10 +33,20 @@ class MyAppView extends StatelessWidget {
         builder: (context, state) {
           log("MAMA SUKA : $state, status state : ${state.status}");
           if (state.status == AuthenticationStatus.authenticated) {
-            return BlocProvider(
-              create: (context) => SignInBloc(
-                context.read<AuthenticationBloc>().userRepository,
-              ),
+            return MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (context) => SignInBloc(
+                    context.read<AuthenticationBloc>().userRepository,
+                  ),
+                ),
+                BlocProvider(
+                  create: (context) => GetPizzaBloc(FirebasePizzaRepo())
+                    ..add(
+                      GetPizza(),
+                    ),
+                ),
+              ],
               child: const HomeScreen(),
             );
           } else {

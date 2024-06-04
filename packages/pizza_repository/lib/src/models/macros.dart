@@ -22,5 +22,12 @@ class Macros {
     );
   }
 
-  static Macros
+  static Macros fromEntity(MacrosEntity entity) {
+    return Macros(
+      calories: entity.calories,
+      proteins: entity.proteins,
+      fat: entity.fat,
+      carbs: entity.carbs,
+    );
+  }
 }

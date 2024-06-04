@@ -1,21 +1,22 @@
 import 'package:pizza_repository/src/entities/entities.dart';
+import 'package:pizza_repository/src/models/macros.dart';
 
 class PizzaEntity {
   String pizzaId;
   String picture;
   bool isVeg;
-  int spicey;
+  int spicy;
   String name;
   String description;
-  double price;
-  double discount;
-  List<MacrosEntity> macros;
+  num price;
+  num discount;
+  Macros macros;
 
   PizzaEntity({
     required this.pizzaId,
     required this.picture,
     required this.isVeg,
-    required this.spicey,
+    required this.spicy,
     required this.name,
     required this.description,
     required this.price,
@@ -28,26 +29,31 @@ class PizzaEntity {
       'pizzaId': pizzaId,
       'picture': picture,
       "isVeg": isVeg,
-      "spicey": spicey,
+      "spicy": spicy,
       "name": name,
       "description": description,
       "price": price,
       "discount": discount,
-      "macros": macros,
+      "macros": macros.toEntity().toDocument(),
     };
   }
 
-  PizzaEntity fromDocument(Map<String, dynamic> doc) {
+  static PizzaEntity fromDocument(Map<String, dynamic> doc) {
+    print("DISINI KAH ? $doc");
+    var l = MacrosEntity.fromDocument(doc['macros']);
+    print("hasil : $l");
     return PizzaEntity(
       pizzaId: doc['pizzaId'],
       picture: doc['picture'],
       isVeg: doc['isVeg'],
-      spicey: doc['spicey'],
+      spicy: doc['spicy'],
       name: doc['name'],
       description: doc['description'],
       price: doc['price'],
       discount: doc['discount'],
-      macros: doc['macros'],
+      macros: Macros.fromEntity(
+        MacrosEntity.fromDocument(doc['macros']),
+      ),
     );
   }
 }

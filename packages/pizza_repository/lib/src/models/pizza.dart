@@ -6,17 +6,17 @@ class Pizza {
   String pizzaId;
   String picture;
   bool isVeg;
-  int spicey;
+  int spicy;
   String name;
   String description;
-  double price;
-  double discount;
-  List<Macros> macros;
+  num price;
+  num discount;
+  Macros macros;
   Pizza(
     this.pizzaId,
     this.picture,
     this.isVeg,
-    this.spicey,
+    this.spicy,
     this.name,
     this.description,
     this.price,
@@ -29,7 +29,7 @@ class Pizza {
       pizzaId: pizzaId,
       picture: picture,
       isVeg: isVeg,
-      spicey: spicey,
+      spicy: spicy,
       name: name,
       description: description,
       price: price,
@@ -43,7 +43,7 @@ class Pizza {
       entity.pizzaId,
       entity.picture,
       entity.isVeg,
-      entity.spicey,
+      entity.spicy,
       entity.name,
       entity.description,
       entity.price,
