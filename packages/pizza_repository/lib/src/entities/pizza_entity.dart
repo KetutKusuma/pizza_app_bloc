@@ -39,9 +39,6 @@ class PizzaEntity {
   }
 
   static PizzaEntity fromDocument(Map<String, dynamic> doc) {
-    print("DISINI KAH ? $doc");
-    var l = MacrosEntity.fromDocument(doc['macros']);
-    print("hasil : $l");
     return PizzaEntity(
       pizzaId: doc['pizzaId'],
       picture: doc['picture'],

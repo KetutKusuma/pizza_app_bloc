@@ -20,7 +20,6 @@ class MacrosEntity {
   }
 
   static MacrosEntity fromDocument(Map<String, dynamic> doc) {
-    // print("ATAU DISINI : $doc");
     return MacrosEntity(
       calories: doc['calories'],
       proteins: doc['proteins'],

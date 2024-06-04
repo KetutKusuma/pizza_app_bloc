@@ -51,6 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.all(10).copyWith(bottom: 0),
         child: BlocBuilder<GetPizzaBloc, GetPizzaState>(
           builder: (context, state) {
+            print("state pizza : $state");
             if (state is GetPizzaSuccess) {
               return GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -70,7 +71,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const DetailScreen(),
+                            builder: (context) => DetailScreen(
+                              pizza: state.pizzas[index],
+                            ),
                           ),
                         );
                       },
@@ -78,8 +81,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Image.asset(
-                            "assets/1.png",
+                          Image.network(
+                            state.pizzas[index].picture,
                           ),
                           Padding(
                             padding:
@@ -88,15 +91,19 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 Container(
                                   decoration: BoxDecoration(
-                                    color: Colors.red,
+                                    color: state.pizzas[index].isVeg
+                                        ? Colors.green
+                                        : Colors.red,
                                     borderRadius: BorderRadius.circular(30),
                                   ),
-                                  child: const Padding(
-                                    padding: EdgeInsets.symmetric(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
                                         vertical: 4, horizontal: 5),
                                     child: Text(
-                                      "NON-VEG",
-                                      style: TextStyle(
+                                      state.pizzas[index].isVeg
+                                          ? "VEG"
+                                          : "NON-VEG",
+                                      style: const TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 10,
@@ -112,13 +119,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                     color: Colors.green.withOpacity(0.2),
                                     borderRadius: BorderRadius.circular(30),
                                   ),
-                                  child: const Padding(
-                                    padding: EdgeInsets.symmetric(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
                                         vertical: 4, horizontal: 5),
                                     child: Text(
-                                      "🌶️ BALANCE",
+                                      state.pizzas[index].spicy == 1
+                                          ? "🌶️ BLAND"
+                                          : state.pizzas[index].spicy == 2
+                                              ? "🌶️ BALANCE"
+                                              : "🌶️ SPICY",
                                       style: TextStyle(
-                                        color: Colors.green,
+                                        color: state.pizzas[index].spicy == 1
+                                            ? Colors.green
+                                            : state.pizzas[index].spicy == 2
+                                                ? Colors.green
+                                                : Colors.redAccent,
                                         fontWeight: FontWeight.w800,
                                         fontSize: 10,
                                       ),
@@ -131,28 +146,31 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(
                             height: 10,
                           ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
                               horizontal: 12,
                             ),
                             child: Text(
-                              "Cheesy Marvel",
-                              style: TextStyle(
+                              state.pizzas[index].name,
+                              style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 12,
-                            ),
-                            child: Text(
-                              "Mama suka dengan pizzaamu",
-                              style: TextStyle(
-                                color: Colors.grey.shade700,
-                                fontSize: 10,
-                                fontWeight: FontWeight.normal,
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                              ),
+                              child: Text(
+                                state.pizzas[index].description,
+                                style: TextStyle(
+                                  color: Colors.grey.shade700,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.normal,
+                                  overflow: TextOverflow.clip,
+                                ),
                               ),
                             ),
                           ),
@@ -167,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: Row(
                                     children: [
                                       Text(
-                                        "\$12.00",
+                                        "\$${state.pizzas[index].price - (state.pizzas[index].price * state.pizzas[index].discount / 100)}",
                                         style: TextStyle(
                                           fontSize: 20,
                                           color: Theme.of(context)
@@ -183,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         child: FittedBox(
                                           fit: BoxFit.scaleDown,
                                           child: Text(
-                                            "\$15.00",
+                                            "\$${state.pizzas[index].price}.00",
                                             style: TextStyle(
                                               decoration:
                                                   TextDecoration.lineThrough,

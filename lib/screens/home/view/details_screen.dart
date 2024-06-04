@@ -2,9 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pizza_app_bloc/components/macro.dart';
+import 'package:pizza_repository/pizza_repository.dart';
 
 class DetailScreen extends StatefulWidget {
-  const DetailScreen({super.key});
+  const DetailScreen({super.key, required this.pizza});
+
+  final Pizza pizza;
 
   @override
   State<DetailScreen> createState() => _DetailScreenState();
@@ -36,9 +39,9 @@ class _DetailScreenState extends State<DetailScreen> {
                       blurRadius: 5,
                     )
                   ],
-                  image: const DecorationImage(
-                    image: AssetImage(
-                      "assets/1.png",
+                  image: DecorationImage(
+                    image: NetworkImage(
+                      widget.pizza.picture,
                     ),
                   ),
                 ),
@@ -64,11 +67,11 @@ class _DetailScreenState extends State<DetailScreen> {
                     children: [
                       Row(
                         children: [
-                          const Expanded(
+                          Expanded(
                             flex: 2,
                             child: Text(
-                              "Truffle Tempation Trifenggle",
-                              style: TextStyle(
+                              widget.pizza.name,
+                              style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -82,7 +85,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
-                                    "\$12.00",
+                                    "\$${widget.pizza.price - (widget.pizza.price * widget.pizza.discount / 100)}",
                                     style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -90,9 +93,9 @@ class _DetailScreenState extends State<DetailScreen> {
                                           Theme.of(context).colorScheme.primary,
                                     ),
                                   ),
-                                  const Text(
-                                    "\$15.00",
-                                    style: TextStyle(
+                                  Text(
+                                    "\$${widget.pizza.price}.00",
+                                    style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.grey,
@@ -109,35 +112,35 @@ class _DetailScreenState extends State<DetailScreen> {
                       const SizedBox(
                         height: 12,
                       ),
-                      const Row(
+                      Row(
                         children: [
                           MyMacroWidget(
                             iconData: FontAwesomeIcons.fire,
-                            value: 290,
+                            value: widget.pizza.macros.calories,
                             title: "Calories",
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           MyMacroWidget(
                             iconData: FontAwesomeIcons.dumbbell,
-                            value: 254,
+                            value: widget.pizza.macros.proteins,
                             title: "Protein",
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           MyMacroWidget(
                             iconData: Icons.water_drop_rounded,
-                            value: 12,
+                            value: widget.pizza.macros.fat,
                             title: "Fat",
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           MyMacroWidget(
                             iconData: FontAwesomeIcons.breadSlice,
-                            value: 87,
+                            value: widget.pizza.macros.carbs,
                             title: "Carbs",
                           ),
                         ],

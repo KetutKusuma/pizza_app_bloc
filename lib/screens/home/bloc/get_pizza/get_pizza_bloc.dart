@@ -17,6 +17,7 @@ class GetPizzaBloc extends Bloc<GetPizzaEvent, GetPizzaState> {
       emit(GetPizzaProcess());
       try {
         List<Pizza> pizzas = await _pizzaRepo.getPizzas();
+        print("length : ${pizzas.length}");
         emit(GetPizzaSuccess(pizzas));
       } catch (e) {
         log(e.toString());

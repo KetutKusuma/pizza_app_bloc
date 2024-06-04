@@ -1,21 +1,19 @@
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pizza_repository/pizza_repository.dart';
-import 'package:pizza_repository/src/models/models.dart';
-import 'package:pizza_repository/src/pizza_repo.dart';
 
 class FirebasePizzaRepo implements PizzaRepo {
   final pizzaCollection = FirebaseFirestore.instance.collection('pizzas');
 
   Future<List<Pizza>> getPizzas() async {
     try {
+      var l = await pizzaCollection.get();
+      print("LENGTH OF PIZZA GET COLLECTION : ${l.docs.length}");
       return await pizzaCollection.get().then(
             (value) => value.docs.map((e) {
-              var yeh = PizzaEntity.fromDocument(
-                e.data(),
-              );
-              print("yeh : $yeh");
+              // var yeh = PizzaEntity.fromDocument(
+              //   e.data(),
+              // );
               return Pizza.fromEntity(
                 PizzaEntity.fromDocument(
                   e.data(),
